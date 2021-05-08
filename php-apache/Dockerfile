@@ -14,6 +14,10 @@ RUN apt update -yqq && apt install -yqq \
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install pdo_mysql opcache
 
+# xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 COPY ./apache2/sites-available/*.conf /etc/apache2/sites-available/

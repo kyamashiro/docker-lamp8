@@ -12,7 +12,8 @@ services:
       - ./workspace:/var/www/html
       - ./php-apache/php.ini:/usr/local/etc/php/php.ini
       - ./php-apache/msmtprc:/etc/msmtprc
-      - ./php-apache/apache2/ssl:/etc/apache2/ssl
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   ### MySQL ##############################################
   mysql:
     image: mysql:8.0
@@ -26,7 +27,6 @@ services:
     volumes:
       - ./db/init:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/mysql
-      - ./db/slow-query.log:/var/log/mysql/slow-query.log
       - ./db/my.cnf:/etc/mysql/my.cnf
   ### MailHog ##############################################
   mailhog:
