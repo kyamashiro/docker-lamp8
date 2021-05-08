@@ -19,8 +19,6 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY ./apache2/sites-available/*.conf /etc/apache2/sites-available/
 
 RUN a2enmod rewrite \
-    && a2enmod ssl \
-    && a2ensite default-ssl \
     && a2ensite vhost \
     && usermod -u 1000 www-data \
     && chown -R www-data:www-data /var/www
