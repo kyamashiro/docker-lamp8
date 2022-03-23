@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   ### PHP & Apache ##############################################
   php-apache:
@@ -11,9 +9,9 @@ services:
       - 8080:8080
     volumes:
       - ./workspace:/var/www/html
+      - ./php-apache/apache2/ssl:/etc/apache2/ssl
       - ./php-apache/php.ini:/usr/local/etc/php/php.ini
       - ./php-apache/msmtprc:/etc/msmtprc
-      - ./php-apache/apache2/ssl:/etc/apache2/ssl
   ### MySQL ##############################################
   mysql:
     image: mysql:8.0
