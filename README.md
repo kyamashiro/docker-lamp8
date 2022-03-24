@@ -2,6 +2,10 @@
 
 Apache + MySQL8 + PHP8 + Composer + Mailhog
 
+## Install Compose V2
+
+https://docs.docker.com/compose/cli-command/#install-on-linux
+
 ## Run
 
 ```
