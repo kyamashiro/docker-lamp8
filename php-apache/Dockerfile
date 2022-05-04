@@ -1,4 +1,4 @@
-FROM php:8.0.3-apache
+FROM php:8.1-rc-apache
 
 RUN apt update -yqq && apt install -yqq \
     git \
