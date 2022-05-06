@@ -8,11 +8,19 @@ RUN apt update -yqq && apt install -yqq \
     vim \
     msmtp msmtp-mta \
     default-mysql-server \
+    graphviz \
     && echo 'mysql-server mysql-server/root_password password pass' | debconf-set-selections \
     && echo 'mysql-server mysql-server/root_password_again password pass' | debconf-set-selections \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install pdo_mysql opcache
+
+RUN git clone https://github.com/tideways/php-xhprof-extension.git \
+    && cd php-xhprof-extension \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 

@@ -30,7 +30,19 @@ $showServerName = false;
 // Main
 // -----------------------------------------------------------------------------
 // check performance
+tideways_xhprof_enable();
+
 $benchmarkResult = test_benchmark($options);
+
+$xhprof_data = tideways_xhprof_disable();
+include_once "/var/www/html/xhprof/xhprof_lib/utils/xhprof_lib.php";
+include_once "/var/www/html/xhprof/xhprof_lib/utils/xhprof_runs.php";
+
+$xhprof_runs = new XHProfRuns_Default();
+$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof_testing");
+
+echo "http://localhost/xhprof/xhprof_html/index.php?run={$run_id}&source=xhprof_testing\n";
+
 
 // benchmark.php?json
 if (isset($_GET['json'])) {

@@ -11,6 +11,7 @@ services:
       - ./workspace:/var/www/html
       - ./php-apache/apache2/ssl:/etc/apache2/ssl
       - ./php-apache/php.ini:/usr/local/etc/php/php.ini
+      - ./php-apache/conf.d:/usr/local/etc/php/conf.d
       - ./php-apache/msmtprc:/etc/msmtprc
   ### MySQL ##############################################
   mysql:
