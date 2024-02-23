@@ -9,12 +9,9 @@ services:
       - 8080:8080
     volumes:
       - ./workspace:/var/www/html
-      - ./php-apache/apache2/ssl:/etc/apache2/ssl
-      - ./php-apache/php.ini:/usr/local/etc/php/php.ini
-      - ./php-apache/msmtprc:/etc/msmtprc
   ### MySQL ##############################################
   mysql:
-    image: mysql:8.0
+    image: mysql:8.3
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -27,9 +24,10 @@ services:
       - ./db/data:/var/lib/mysql
       - ./db/slow-query.log:/var/log/mysql/slow-query.log
       - ./db/my.cnf:/etc/mysql/my.cnf
-  ### MailHog ##############################################
-  mailhog:
-    container_name: mailhog
-    image: mailhog/mailhog
+  ### MailPit ##############################################
+  mailpit:
+    container_name: mailpit
+    image: axllent/mailpit:latest
     ports:
-      - 8025:8025
+      - "1025:1025"
+      - "8025:8025"

@@ -28,9 +28,15 @@ $ mkcert localhost
 
 add `localhost.pem` and `localhost-key.pem` file to `php-apache/apache2/ssl`.
 
-# extension-check
+# extension check
 
 ```sh
 php -m | egrep -i -v 'bcmath|ctype|fileinfo|json|mbstring|openssl|pdo|tokenizer|xml'
 php -r 'phpinfo();'
+```
+
+# mail check
+
+```sh
+php -r 'mail("to@example.com", "Subject", "Message", "From: from@example.com");'
 ```

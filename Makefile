@@ -1,14 +1,16 @@
-start:
+.PHONY: up build down remove bash mysql/bash
+
+up:
 	docker compose up -d
 
 build:
 	docker compose -f "compose.yml" up -d --build
 
-stop:
+down:
 	docker compose stop
 
 remove:
-	docker compose stop
+	$(MAKE) down
 	docker compose rm
 
 bash:
