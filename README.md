@@ -1,6 +1,6 @@
 # docker-lamp8
 
-Apache + MySQL8 + PHP8 + Composer + Mailhog
+Apache + MySQL8 + PHP8 + Composer + Mailpit
 
 ## Install Compose V2
 
@@ -10,12 +10,9 @@ https://docs.docker.com/compose/cli-command/#install-on-linux
 
 ```
 make build
-make start
-make stop
-make remove
-make bash
-make mysql/bash
 ```
+
+See Makefile.
 
 ## SSL
 
@@ -26,7 +23,7 @@ $ mkcert --install
 $ mkcert localhost
 ```
 
-add `localhost.pem` and `localhost-key.pem` file to `php-apache/apache2/ssl`.
+Add `localhost.pem` and `localhost-key.pem` file to `php-apache/apache2/ssl`.
 
 # extension check
 
