@@ -14,11 +14,8 @@ RUN apt update -yqq && apt install -yqq \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions @composer xdebug opcache bcmath pdo_mysql redis
-RUN  echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN install-php-extensions @composer xdebug opcache bcmath pdo_mysql redis xhprof
 
-COPY ./php.ini /usr/local/etc/php/php.ini
 COPY ./apache2/sites-available/*.conf /etc/apache2/sites-available/
 COPY ./apache2/ssl /etc/apache2/ssl
 COPY ./msmtprc /etc/msmtprc

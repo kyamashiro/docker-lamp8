@@ -9,6 +9,8 @@ services:
       - 8080:8080
     volumes:
       - ./workspace:/var/www/html
+      - ./php-apache/conf.d:/usr/local/etc/php/conf.d
+      - ./tmp:/tmp
   ### MySQL ##############################################
   mysql:
     image: mysql:8.3

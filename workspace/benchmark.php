@@ -30,6 +30,7 @@ $showServerName = false;
 // Main
 // -----------------------------------------------------------------------------
 // check performance
+xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
 $benchmarkResult = test_benchmark($options);
 
 // benchmark.php?json
@@ -41,7 +42,10 @@ if (isset($_GET['json'])) {
     // html output
     echo print_html_result($benchmarkResult, $showServerName);
 }
-
+file_put_contents(
+    '/tmp/' . date('Ymd_His') . '.xhprof',
+    json_encode(xhprof_disable())
+);
 exit;
 
 // -----------------------------------------------------------------------------

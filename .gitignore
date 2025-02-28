@@ -4,3 +4,4 @@ db/data/
 php-apache/apache2/ssl/*.pem
 workspace/
 db/*.log
+tmp/
