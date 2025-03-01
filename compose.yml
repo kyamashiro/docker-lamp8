@@ -12,24 +12,31 @@ services:
       - ./php-apache/conf.d:/usr/local/etc/php/conf.d
       - ./tmp:/tmp
   ### MySQL ##############################################
-  mysql:
-    image: mysql:8.3
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      TZ: Asia/Tokyo
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+#  mysql:
+#    image: mysql:8.3
+#    container_name: mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: password
+#      TZ: Asia/Tokyo
+#    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+#    ports:
+#      - 3306:3306
+#    volumes:
+#      - ./db/init:/docker-entrypoint-initdb.d
+#      - ./db/data:/var/lib/mysql
+#      - ./db/slow-query.log:/var/log/mysql/slow-query.log
+#      - ./db/my.cnf:/etc/mysql/my.cnf
+#  ### MailPit ##############################################
+#  mailpit:
+#    container_name: mailpit
+#    image: axllent/mailpit:latest
+#    ports:
+#      - "1025:1025"
+#      - "8025:8025"
+  buggregator:
+    image: ghcr.io/buggregator/server:latest
     ports:
-      - 3306:3306
-    volumes:
-      - ./db/init:/docker-entrypoint-initdb.d
-      - ./db/data:/var/lib/mysql
-      - ./db/slow-query.log:/var/log/mysql/slow-query.log
-      - ./db/my.cnf:/etc/mysql/my.cnf
-  ### MailPit ##############################################
-  mailpit:
-    container_name: mailpit
-    image: axllent/mailpit:latest
-    ports:
-      - "1025:1025"
-      - "8025:8025"
+      - 127.0.0.1:8000:8000
+      - 127.0.0.1:1025:1025
+      - 127.0.0.1:9912:9912
+      - 127.0.0.1:9913:9913

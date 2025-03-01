@@ -1,5 +1,12 @@
 <?php
 
+use SpiralPackages\Profiler\DriverFactory;
+use SpiralPackages\Profiler\Profiler;
+use SpiralPackages\Profiler\Storage\WebStorage;
+use Symfony\Component\HttpClient\NativeHttpClient;
+
+require __DIR__ . '/vendor/autoload.php';
+
 /**
  * PHP Script to benchmark PHP and MySQL-Server.
  *
@@ -9,6 +16,27 @@
  *
  * @license MIT
  */
+
+$storage = new WebStorage(
+    new NativeHttpClient(),
+    'http://buggregator:8000/api/profiler/store'
+);
+
+$driver = DriverFactory::detect();
+
+$profiler = new Profiler(
+    storage: $storage,
+    driver: $driver,
+    appName: 'My super app',
+    tags: [
+        // global tags
+        'env' => 'local',
+    ]
+);
+
+$profiler->start();
+
+// Here is your code you want to profile
 
 // -----------------------------------------------------------------------------
 // Setup
@@ -30,7 +58,7 @@ $showServerName = false;
 // Main
 // -----------------------------------------------------------------------------
 // check performance
-xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
+//xhprof_sample_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
 $benchmarkResult = test_benchmark($options);
 
 // benchmark.php?json
@@ -42,10 +70,17 @@ if (isset($_GET['json'])) {
     // html output
     echo print_html_result($benchmarkResult, $showServerName);
 }
-file_put_contents(
-    '/tmp/' . date('Ymd_His') . '.xhprof',
-    json_encode(xhprof_disable())
-);
+
+//file_put_contents(
+//    '/tmp/' . date('Ymd_His') . '.xhprof',
+//    xhprof_sample_disable()
+//);
+$profiler->end();
+
+// xhprof-html
+//$filename = '/tmp/' . intval(microtime(true)) . mt_rand(1,10000) . '.xhprof';
+//file_put_contents($filename, serialize(xhprof_disable()));
+
 exit;
 
 // -----------------------------------------------------------------------------
